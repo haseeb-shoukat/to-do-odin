@@ -1,1 +1,4 @@
-const container = document.querySelector("#container");
+import { initializePage } from "./modules/initialize.js"
+
+initializePage();
+
