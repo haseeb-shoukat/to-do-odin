@@ -1,4 +1,4 @@
-import { createElement} from "./element.js"
+import { createElement } from "./element.js"
 
 
 const initializePage = function() {
@@ -12,6 +12,8 @@ const initializePage = function() {
     items.forEach(item => {
         container.appendChild(item);
     })
+
+    changePage();
 };
 
 const createNavbar = function() {
@@ -40,8 +42,6 @@ const createNavbar = function() {
         })
     );
 
-
-
     return navBar;
 }
 
@@ -52,83 +52,62 @@ const createSidebar = function() {
         classList: ["side-bar"],
     })
 
-    let home = createElement({
-        tag: "div",
-        classList: ["side-item"],
-    })
-
-    home.append(createElement({
-        tag: "i",
-        classList: ["fa","fa-home"],
-        attr: {
-            "aria-hidden": "true"
-        }
-    }),
-    createElement({
-        tag: "span",
-        text: "Home"
-    }))
-
-    let projects = createElement({
-        tag: "div",
-        classList: ["side-item"],
-    })
-
-    projects.append(createElement({
-        tag: "i",
-        classList: ["fa","fa-briefcase"],
-        attr: {
-            "aria-hidden": "true"
-        }
-    }),
-    createElement({
-        tag: "span",
-        text: "Projects"
-    }))
-
-    let notes = createElement({
-        tag: "div",
-        classList: ["side-item"],
-    })
-
-    notes.append(createElement({
-        tag: "i",
-        classList: ["fa","fa-sticky-note"],
-        attr: {
-            "aria-hidden": "true"
-        }
-    }),
-    createElement({
-        tag: "span",
-        text: "Notes"
-    }))
-
-    sideBar.append(home, projects, notes);
+    sideBar.append(
+        createSideItem("home", "Home"), 
+        createSideItem("briefcase", "Projects", false), 
+        createSideItem("sticky-note", "Notes"));
 
     return sideBar;
 }
 
+const createSideItem = function(icon, text, selectable) {
+
+    let sideItem = createElement({
+        tag: "div",
+        attr: {
+            id: text.toLowerCase()
+        },
+        classList: ["side-item"],
+    })
+
+    if (selectable != false) {
+        sideItem.classList.add("selectable");
+    }
+
+    sideItem.append(createElement({
+        tag: "i",
+        classList: ["fa", `fa-${icon}`],
+        attr: {
+            "aria-hidden": "true"
+        }
+    }),
+    createElement({
+        tag: "span",
+        text: text
+    }))
+
+    return sideItem
+}
+
+const changePage = function() {
+    const selectableItems = document.querySelectorAll(".selectable");
+    let selected = document.querySelector("#home");
+    selected.classList.add("selected");
+
+    selectableItems.forEach(item => {
+        item.addEventListener("click", e => {
+            if (item === selected) return;
+
+            selected.classList.remove("selected");
+            item.classList.add("selected");
+            selected = item;
+            fillContainer(item.id);
+        })
+    })
+}
+
+const fillContainer = function() {
+
+}
+
 export {initializePage}
-
-
-
-{/* 
-<div class="nav-bar">
-    <i class="fa fa-tasks fa-3x" aria-hidden="true"></i>
-    <div class="nav-heading">To-Do</div>
-    <div class="nav-side">Tasks and Notes</div>
-</div>
-
-<div class="side-bar">
-    <div class="side-item">
-        <i class="fa fa-home" aria-hidden="true"></i>Home
-    </div>
-    <div class="side-item">
-        <i class="fa fa-briefcase" aria-hidden="true"></i>Projects
-    </div>
-    <div class="side-item">
-        <i class="fa fa-sticky-note" aria-hidden="true"></i>Notes
-    </div>
-</div>
-
-<div class="main-container"></div> */}
