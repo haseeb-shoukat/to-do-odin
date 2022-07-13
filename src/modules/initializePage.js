@@ -1,4 +1,5 @@
-import { createElement } from "./element.js"
+import { createElement } from "./createElement.js"
+import { fillContainer } from "./fillContainer.js"
 
 
 const initializePage = function() {
@@ -54,13 +55,13 @@ const createSidebar = function() {
 
     sideBar.append(
         createSideItem("home", "Home"), 
-        createSideItem("briefcase", "Projects", false), 
+        createSideItem("briefcase", "Projects"), 
         createSideItem("sticky-note", "Notes"));
 
     return sideBar;
 }
 
-const createSideItem = function(icon, text, selectable) {
+const createSideItem = function(icon, text) {
 
     let sideItem = createElement({
         tag: "div",
@@ -69,10 +70,6 @@ const createSideItem = function(icon, text, selectable) {
         },
         classList: ["side-item"],
     })
-
-    if (selectable != false) {
-        sideItem.classList.add("selectable");
-    }
 
     sideItem.append(createElement({
         tag: "i",
@@ -90,24 +87,21 @@ const createSideItem = function(icon, text, selectable) {
 }
 
 const changePage = function() {
-    const selectableItems = document.querySelectorAll(".selectable");
+    const sideItems = document.querySelectorAll(".side-item");
     let selected = document.querySelector("#home");
     selected.classList.add("selected");
 
-    selectableItems.forEach(item => {
+    sideItems.forEach(item => {
         item.addEventListener("click", e => {
             if (item === selected) return;
-
-            selected.classList.remove("selected");
-            item.classList.add("selected");
-            selected = item;
+            if (item.id != "projects") {
+                selected.classList.remove("selected");
+                item.classList.add("selected");
+                selected = item;
+            }
             fillContainer(item.id);
         })
     })
-}
-
-const fillContainer = function() {
-
 }
 
 export {initializePage}
