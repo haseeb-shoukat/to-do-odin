@@ -12,7 +12,6 @@ const projectForm = function() {
         attr:{
             type : "text",
             placeholder: "Project Name",
-            required : ""
         },
         classList: ["p-form-text"], 
     })
@@ -24,7 +23,6 @@ const projectForm = function() {
 
     const cancelBtn = createElement({
         tag: "button",
-        attr: {type: "button"},
         text: "Cancel",
         classList: ["cancel-btn"], 
     })
@@ -32,10 +30,6 @@ const projectForm = function() {
     const submitBtn = createElement({
         tag: "button",
         text: "Okay",
-        attr: {
-            type: "submit",
-            form: "p-form",
-        },
         classList: ["submit-btn"], 
     })
 
@@ -46,10 +40,7 @@ const projectForm = function() {
     buttons.append( cancelBtn, submitBtn)
 
     const projectForm = createElement({
-        tag: "form",
-        attr: {
-            id: "p-form",
-        },
+        tag: "div",
         classList: ["project-form"], 
     })
     

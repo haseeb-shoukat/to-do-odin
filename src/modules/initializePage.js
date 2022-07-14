@@ -1,5 +1,5 @@
 import { createElement } from "./createElement.js"
-import { fillContainer } from "./fillContainer.js"
+import { refreshDOM } from "./refreshDOM.js"
 
 
 const initializePage = function() {
@@ -14,7 +14,7 @@ const initializePage = function() {
         container.appendChild(item);
     })
 
-    changePage();
+    refreshDOM("home");
 };
 
 const createNavbar = function() {
@@ -83,25 +83,20 @@ const createSideItem = function(icon, text) {
         text: text
     }))
 
-    return sideItem
-}
-
-const changePage = function() {
-    const sideItems = document.querySelectorAll(".side-item");
-    let selected = document.querySelector("#home");
-    selected.classList.add("selected");
-
-    sideItems.forEach(item => {
-        item.addEventListener("click", e => {
-            if (item === selected) return;
-            if (item.id != "projects") {
-                selected.classList.remove("selected");
-                item.classList.add("selected");
-                selected = item;
-            }
-            fillContainer(item.id);
+    if (text === "Projects") {
+        let div = createElement({
+            tag: "div",
         })
-    })
+        
+        div.append(sideItem, createElement({
+            tag: "div",
+            classList: ["project-items"]
+        }))
+
+        return div;
+    }
+
+    return sideItem
 }
 
 export {initializePage}

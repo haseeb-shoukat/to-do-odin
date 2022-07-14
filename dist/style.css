@@ -42,7 +42,7 @@ html, body {
     display: flex;
     flex-direction: column;
     padding: 40px 40px 20px 60px;
-    gap: 40px;
+    gap: 20px;
 }
 
 .side-item {
@@ -53,7 +53,7 @@ html, body {
     user-select: none; /* Standard syntax */
 }
 
-.side-item:hover {
+.side-item:hover, .project-item:hover {
     cursor: pointer;
     color: #047857;
 }
@@ -126,4 +126,16 @@ html, body {
 
 .p-form-text:focus {
     outline-style: none;
+}
+
+.project-items {
+    padding: 10px 10px 0px 30px;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 100;
+    width: fit-content;
+    -webkit-user-select: none; /* Safari */
+    user-select: none; /* Standard syntax */
 }
