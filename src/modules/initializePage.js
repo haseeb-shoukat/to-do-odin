@@ -14,7 +14,12 @@ const initializePage = function() {
         container.appendChild(item);
     })
 
-    refreshDOM("home");
+    document.querySelector("#home").classList.add("selected");
+    if (localStorage.getItem("Home") === null) {
+        localStorage.setItem("Home", "")
+    }
+
+    refreshDOM("Home");
 };
 
 const createNavbar = function() {
@@ -56,7 +61,7 @@ const createSidebar = function() {
     sideBar.append(
         createSideItem("home", "Home"), 
         createSideItem("briefcase", "Projects"), 
-        createSideItem("sticky-note", "Notes"));
+    )
 
     return sideBar;
 }
