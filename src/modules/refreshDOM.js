@@ -1,5 +1,5 @@
 import { createElement } from "./createElement.js";
-import { projectForm } from "./projectForm.js"
+import { projectForm, taskForm } from "./projectForm.js"
 
 const refreshDOM = function(name) {
     // items.forEach(item => console.log(JSON.parse(item)))
@@ -161,7 +161,7 @@ const loadPage = function(id) {
 }
 
 const createNewTask = function() {
-    console.log("works")
+    container.appendChild(taskForm());
 }
 
 class Project {

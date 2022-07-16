@@ -91,7 +91,7 @@ html, body {
     background-color: #00000098;
 }
 
-.project-form {
+.project-form, .task-form {
     padding: 10px 20px;
     gap: 10px;
     width: 300px;
@@ -103,19 +103,58 @@ html, body {
     justify-content: center;
 }
 
-.p-form-buttons {
+.task-form {
+    height: max-content;
+    width: 500px;
+    font-weight: 300;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.t-form-heading {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+textarea, .t-title {
+    display: block;
+    width: calc(100% - 20px);
+    resize: none;
+    margin: 10px;
+    
+}
+
+.r {
+    font-size: 17px;
+}
+
+.m {
+    display: block;
+    margin: 20px 0px;
+}
+
+input[type="date"] {
+    margin: 0px 10px;
+}
+
+.p-form-buttons, .t-form-buttons {
     display: flex;
     justify-content: center;
     gap: 30px;
 }
 
-.submit-btn, .cancel-btn, .new-task-btn {
+.submit-btn, .cancel-btn, .new-task-btn, .t-submit-btn {
     padding: 2px 10px;
     border-radius: 5px;
     width: 60px;
     background-color: white;
     border: 1px solid #059669;
     color: #059669;
+}
+
+.b {
+    width: 80px;
+    font-size: 15px;
 }
 
 .new-task-btn {
@@ -126,13 +165,13 @@ html, body {
     margin-left: 30px;
 }
 
-.submit-btn:hover, .cancel-btn:hover, .new-task-btn:hover {
+.submit-btn:hover, .cancel-btn:hover, .new-task-btn:hover, .t-submit-btn:hover {
     background-color: #059669;
     border: 1px solid #059669;
     color: white;
 }
 
-.p-form-text:focus {
+input:focus, textarea:focus {
     outline-style: none;
 }
 
