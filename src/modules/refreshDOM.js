@@ -116,7 +116,7 @@ function handleForm(e) {
 
     document.querySelector(".overlay").remove();
     if (localStorage.getItem(name) === null) {
-        localStorage.setItem(name, "");
+        localStorage.setItem(name, JSON.stringify([]));
         refreshProjects();
     }
     else {
@@ -162,6 +162,33 @@ const loadPage = function(id) {
 
 const createNewTask = function() {
     container.appendChild(taskForm());
+    const taskContent = document.querySelector(".t-content")
+    taskContent.addEventListener("submit", e => {
+
+        e.preventDefault();
+        document.querySelector(".overlay").remove();
+        let key = document.querySelector(".selected");
+
+        if (key.id === "Home") {
+            key = "Home"
+        }
+        else {
+            key = key.textContent
+        }
+
+        const project = localStorage.getItem(key);
+        const formData = Object.fromEntries(new FormData(e.target).entries());
+
+        if (project === null) {
+            alert("Project does not exist.");
+            return
+        }
+
+        let tasks = JSON.parse(project);
+        tasks.push(formData);
+        localStorage.setItem(key, JSON.stringify(tasks));
+        
+    })
 }
 
 class Project {

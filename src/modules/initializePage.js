@@ -16,7 +16,7 @@ const initializePage = function() {
 
     document.querySelector("#home").classList.add("selected");
     if (localStorage.getItem("Home") === null) {
-        localStorage.setItem("Home", "")
+        localStorage.setItem("Home", JSON.stringify([]))
     }
 
     refreshDOM("Home");

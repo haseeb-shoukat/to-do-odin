@@ -85,14 +85,15 @@ const taskForm = function() {
 
     const title = createElement({
         tag: "label",
-        text: "Title:"
+        text: "Title:",
     })
 
     title.append(createElement({
         tag: "input",
         attr:{
             type : "text",
-            required: ""
+            required: "",
+            name:"title",
         },
         classList: ["t-title"], 
     }))
@@ -106,7 +107,7 @@ const taskForm = function() {
         tag: "textarea",
         attr:{
             rows : "4",
-            required: ""
+            name:"description",
         },
         classList: ["t-description"], 
     }))
@@ -132,13 +133,13 @@ const taskForm = function() {
 
     dueDate.append(createElement({
         tag:"input",
-        attr: {type:"date", required:""},
+        attr: {type:"date", required:"", name:"dueDate",},
     }))
 
     const formContent = createElement({
         tag:"form",
         classList: ["t-content"],
-        attr:{id:"task-form"},
+        attr:{id:"task-form", action:" ", method:"post"},
     })
 
     formContent.append(title, description, priority, dueDate, buttons);
