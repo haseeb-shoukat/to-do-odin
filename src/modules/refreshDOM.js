@@ -1,4 +1,4 @@
-import { createElement } from "./createElement.js";
+import { createElement, createTasks } from "./createElement.js";
 import { projectForm, taskForm } from "./projectForm.js"
 
 const refreshDOM = function(name) {
@@ -127,7 +127,7 @@ function handleForm(e) {
 
 const loadPage = function(id) {
     const mainContainer = document.querySelector(".main-container");
-    let page = localStorage.getItem(id);
+    let page = JSON.parse(localStorage.getItem(id));
     if (page === null) {
         alert("Page does not exist.");
         return
@@ -156,8 +156,37 @@ const loadPage = function(id) {
     header.append( heading, button)
 
     mainContainer.appendChild(header)
+    loadTasks(page, mainContainer);
 
+}
 
+const loadTasks = function(elements, mainContainer) {
+    let tasks = []
+    elements.forEach(e => {
+        tasks.push(new Task(e.title, e.description, e.dueDate, e.priority))
+    })
+
+    mainContainer.appendChild(createTasks(tasks))
+
+    collapse();
+
+}
+
+const collapse = function() {
+    var coll = document.getElementsByClassName("task");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+    }
 }
 
 const createNewTask = function() {
@@ -187,6 +216,7 @@ const createNewTask = function() {
         let tasks = JSON.parse(project);
         tasks.push(formData);
         localStorage.setItem(key, JSON.stringify(tasks));
+        loadPage(key);
         
     })
 }

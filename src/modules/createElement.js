@@ -19,6 +19,37 @@ const createElement = function(obj) {
     return element
 }
 
+const createTasks = function(tasks) {
+    let tasksHolder = createElement({
+        tag:"div",
+        class: "tasks-container",
+    });
+
+    let items = "";
+    tasks.forEach(task => {
+        let p = task.priority;
+        let color = "";
+
+        if (p === "low") { color="task-blue" } 
+        else if (p === "medium") { color="task-yellow" }
+        else { color = "task-red" }
+
+        const item = `<div class="${color} task">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-due-date">${task.dueDate}</div>
+                        <i class="fa fa-times sm"></i>
+                    </div>
+                    <div class="hidden">
+                        <div class="task-description">Details: ${task.description}</div>
+                        <div class="task-priority">Priority: ${task.priority}</div>
+                        <button class="edit-task">Edit Details</button>
+                    </div>`;
+        items += item;
+    })
+    tasksHolder.innerHTML = items;
+    return tasksHolder;
+}
+
 export {
-    createElement
+    createElement, createTasks
 }
