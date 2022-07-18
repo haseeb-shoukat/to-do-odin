@@ -1,4 +1,3 @@
-import { initializePage } from "./modules/initializePage.js"
+import { initializePage } from "./modules/initializePage.js";
 
 initializePage();
-
