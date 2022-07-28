@@ -288,3 +288,7 @@ textarea:focus {
 .task-red {
   border-left: 3px solid rgb(255, 114, 114);
 }
+
+.bold {
+  font-weight: 400;
+}
