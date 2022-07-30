@@ -1,4 +1,4 @@
-import { editTaskForm } from "./projectForm.js"
+import { editTaskForm } from "./projectForm.js";
 
 const createElement = function (obj) {
   let element = document.createElement(obj.tag);
@@ -22,80 +22,84 @@ const createElement = function (obj) {
 };
 
 const createTasks = function (tasks) {
-    let tasksHolder = createElement({
+  let tasksHolder = createElement({
+    tag: "div",
+    class: "tasks-container",
+  });
+
+  let id = -1;
+
+  tasks.forEach((task) => {
+    let p = task.priority;
+    let color = "";
+
+    id += 1;
+
+    if (p === "low") {
+      color = "task-blue";
+    } else if (p === "medium") {
+      color = "task-yellow";
+    } else {
+      color = "task-red";
+    }
+
+    const visible = createElement({
       tag: "div",
-      class: "tasks-container",
+      classList: [color, "task"],
     });
 
-    let id = -1;
-
-    tasks.forEach((task) => {
-      let p = task.priority;
-      let color = "";
-
-      id += 1;
-  
-      if (p === "low") {
-        color = "task-blue";
-      } else if (p === "medium") {
-        color = "task-yellow";
-      } else {
-        color = "task-red";
-      }
-  
-      const visible = createElement({
-        tag: "div",
-        classList: [color, "task"]
-      });
-      
-      visible.append(createElement({
+    visible.append(
+      createElement({
         tag: "div",
         classList: ["task-title"],
         text: task.title,
-      }), createElement({
+      }),
+      createElement({
         tag: "div",
         classList: ["task-due-date"],
         text: task.dueDate,
-      }), createElement({
+      }),
+      createElement({
         tag: "i",
-        classList: ["fa", "fa-times", "sm", "remove-task"]
-      }));
-                      
-      const hidden = createElement({
-        tag: "div",
-        classList: ["hidden"]
-      });
-
-      const description = createElement({
-        tag: "div",
-        classList: ["task-description"]
-      });
-
-      description.innerHTML = `<span class="bold">Details:</span> ${task.description}`
-
-      const priority = createElement({
-        tag: "div",
-        classList: ["task-priority"]
-      });
-
-      priority.innerHTML = `<span class="bold">Priority:</span> ${task.priority}`
-
-      const editBtn = createElement({
-        tag: "button",
-        classList: ["edit-task"],
-        text: "Edit Details"
-      });
-
-      editBtn.addEventListener("click", e => {
-        editTaskForm(task, id);
+        classList: ["fa", "fa-times", "sm", "remove-task"],
       })
-      
-      hidden.append(description, priority, editBtn);
+    );
 
-      tasksHolder.append(visible, hidden);
+    const hidden = createElement({
+      tag: "div",
+      classList: ["hidden"],
     });
-  
-    return tasksHolder;
-  };
+
+    const description = createElement({
+      tag: "div",
+      classList: ["task-description"],
+    });
+
+    description.innerHTML = `<span class="bold">Details:</span> ${task.description}`;
+
+    const priority = createElement({
+      tag: "div",
+      classList: ["task-priority"],
+    });
+
+    priority.innerHTML = `<span class="bold">Priority:</span> ${task.priority}`;
+
+    const editBtn = createElement({
+      tag: "button",
+      classList: ["edit-task"],
+      text: "Edit Details",
+    });
+
+    editBtn.addEventListener("click", (e) => {
+      editTaskForm(task, id);
+    });
+
+    hidden.append(description, priority, editBtn);
+
+    tasksHolder.append(visible, hidden);
+  });
+
+  return tasksHolder;
+};
 
 export { createElement, createTasks };

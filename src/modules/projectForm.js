@@ -214,10 +214,9 @@ const editTaskForm = function (task, id) {
 
     let tasks = JSON.parse(project);
     tasks.splice(id, 1, formData);
-    
+
     localStorage.setItem(key, JSON.stringify(tasks));
     loadPage(key);
-
   });
 };
 
