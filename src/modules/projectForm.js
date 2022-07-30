@@ -1,4 +1,5 @@
 import { createElement } from "./createElement.js";
+import { loadPage } from "./refreshDOM.js";
 
 const projectForm = function () {
   const buttons = createElement({
@@ -58,7 +59,7 @@ const projectForm = function () {
   return overlay;
 };
 
-const taskForm = function () {
+const taskForm = function (key) {
   const buttons = createElement({
     tag: "div",
     classList: ["t-form-buttons"],
@@ -78,7 +79,7 @@ const taskForm = function () {
     cancelBtn,
     createElement({
       tag: "button",
-      text: "Create",
+      text: key,
       attr: { for: "task-form" },
       classList: ["t-submit-btn", "b"],
     })
@@ -159,7 +160,7 @@ const taskForm = function () {
   taskForm.append(
     createElement({
       tag: "div",
-      text: "Create a new task:",
+      text: `${key} task`,
       classList: ["t-form-heading"],
     }),
     formContent
@@ -175,4 +176,49 @@ const taskForm = function () {
   return overlay;
 };
 
-export { projectForm, taskForm };
+const editTaskForm = function (task, id) {
+  if (document.querySelector(".overlay")) return;
+  const container = document.querySelector("#container");
+  container.appendChild(taskForm("Edit"));
+
+  document.querySelector(".t-title").value = task.title;
+  document.querySelector(".t-description").value = task.description;
+  document.querySelector(`#${task.priority}`).checked = true;
+  document.querySelector("[name = dueDate]").value = task.dueDate;
+
+  document.querySelector(".task-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let key = document.querySelector(".selected");
+
+    if (key.id === "Home") {
+      key = "Home";
+    } else {
+      key = key.textContent;
+    }
+
+    const project = localStorage.getItem(key);
+    const formData = Object.fromEntries(new FormData(e.target).entries());
+
+    if (project === null) {
+      alert("Project does not exist.");
+      return;
+    }
+
+    if (JSON.stringify(formData) === JSON.stringify(task)) {
+      alert("No changes made");
+      return;
+    }
+
+    document.querySelector(".overlay").remove();
+
+    let tasks = JSON.parse(project);
+    tasks.splice(id, 1, formData);
+    
+    localStorage.setItem(key, JSON.stringify(tasks));
+    loadPage(key);
+
+  });
+};
+
+export { projectForm, taskForm, editTaskForm };

@@ -186,7 +186,7 @@ const collapse = function () {
 };
 
 const createNewTask = function () {
-  container.appendChild(taskForm());
+  container.appendChild(taskForm("Create"));
   const taskContent = document.querySelector(".t-content");
   taskContent.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -214,4 +214,4 @@ const createNewTask = function () {
   });
 };
 
-export { refreshDOM };
+export { refreshDOM, loadPage };

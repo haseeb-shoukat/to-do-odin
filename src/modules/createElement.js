@@ -1,3 +1,5 @@
+import { editTaskForm } from "./projectForm.js"
+
 const createElement = function (obj) {
   let element = document.createElement(obj.tag);
 
@@ -19,53 +21,19 @@ const createElement = function (obj) {
   return element;
 };
 
-// const createTasks = function (tasks) {
-//   let tasksHolder = createElement({
-//     tag: "div",
-//     class: "tasks-container",
-//   });
-
-//   let items = "";
-//   let i = 0;
-//   tasks.forEach((task) => {
-//     let p = task.priority;
-//     let color = "";
-
-//     if (p === "low") {
-//       color = "task-blue";
-//     } else if (p === "medium") {
-//       color = "task-yellow";
-//     } else {
-//       color = "task-red";
-//     }
-
-//     const item = `<div id="${i}" class="${color} task">
-//                         <div class="task-title">${task.title}</div>
-//                         <div class="task-due-date">${task.dueDate}</div>
-//                         <i class="fa fa-times sm remove-task"></i>
-//                     </div>
-//                     <div class="hidden">
-//                         <div class="task-description"><span class="bold">Details:</span> ${task.description}</div>
-//                         <div class="task-priority"><span class="bold">Priority:</span> ${task.priority}</div>
-//                         <button class="edit-task">Edit Details</button>
-//                     </div>`;
-//     items += item;
-//     i += 1;
-//   });
-//   tasksHolder.innerHTML = items;
-//   return tasksHolder;
-// };
-
-
 const createTasks = function (tasks) {
     let tasksHolder = createElement({
       tag: "div",
       class: "tasks-container",
     });
 
+    let id = -1;
+
     tasks.forEach((task) => {
       let p = task.priority;
       let color = "";
+
+      id += 1;
   
       if (p === "low") {
         color = "task-blue";
@@ -117,6 +85,10 @@ const createTasks = function (tasks) {
         classList: ["edit-task"],
         text: "Edit Details"
       });
+
+      editBtn.addEventListener("click", e => {
+        editTaskForm(task, id);
+      })
       
       hidden.append(description, priority, editBtn);
 
